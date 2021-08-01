@@ -32,6 +32,37 @@ import AppKit
 import UIKit
 #endif
 
+class GVIndicator: Indicator {
+    var timer: Timer?
+    
+    func startAnimatingView() {
+        view.isHidden = false
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            UIView.animate(withDuration: 0.9, animations: {
+                if self.view.backgroundColor == .lightGray {
+                    self.view.backgroundColor = .gray
+                } else {
+                    self.view.backgroundColor = .lightGray
+                }
+            })
+        }
+    }
+    
+    func stopAnimatingView() {
+        view.isHidden = true
+        timer?.invalidate()
+    }
+    
+    var view: IndicatorView = {
+        let view = UIView()
+        view.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        view.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        view.backgroundColor = .lightGray
+        return view
+    }()
+}
+
 extension KingfisherWrapper where Base: KFCrossPlatformImageView {
 
     // MARK: Setting Image
@@ -297,6 +328,8 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
             // Always set placeholder while there is no image/placeholder yet.
             mutatingSelf.placeholder = placeholder
         }
+        self.base.contentMode = .scaleAspectFit
+        mutatingSelf.indicator = GVIndicator()
 
         let maybeIndicator = indicator
         maybeIndicator?.startAnimatingView()
