@@ -383,6 +383,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
                         guard self.needsTransition(options: options, cacheType: value.cacheType) else {
                             mutatingSelf.placeholder = nil
                             self.base.image = value.image
+                            self.base.backgroundColor = .clear
                             completionHandler?(result)
                             return
                         }
@@ -394,6 +395,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
                     case .failure:
                         if let image = options.onFailureImage {
                             self.base.image = image
+                            self.base.backgroundColor = #colorLiteral(red: 0.8078431373, green: 0.8078431373, blue: 0.8078431373, alpha: 1)
                         }
                         completionHandler?(result)
                     }
