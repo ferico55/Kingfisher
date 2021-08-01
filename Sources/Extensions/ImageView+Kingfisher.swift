@@ -63,6 +63,16 @@ class GVIndicator: Indicator {
     }()
 }
 
+extension UIImage {
+    func resized(toWidth width: CGFloat) -> UIImage? {
+        let canvasSize = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
+        UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
+        defer { UIGraphicsEndImageContext() }
+        draw(in: CGRect(origin: .zero, size: canvasSize))
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}
+
 extension KingfisherWrapper where Base: KFCrossPlatformImageView {
 
     // MARK: Setting Image
@@ -384,6 +394,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
                             mutatingSelf.placeholder = nil
                             self.base.image = value.image
                             self.base.backgroundColor = .clear
+                            self.base.contentMode = .scaleAspectFit
                             completionHandler?(result)
                             return
                         }
@@ -394,8 +405,8 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
 
                     case .failure:
                         if let image = options.onFailureImage {
-                            self.base.contentMode = .scaleAspectFit
-                            self.base.image = image
+                            self.base.contentMode = .center
+                            self.base.image = image?.resized(toWidth: self.base.frame.width / 2)
                             self.base.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
                         }
                         completionHandler?(result)
