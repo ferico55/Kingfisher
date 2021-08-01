@@ -394,7 +394,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
 
                     case .failure:
                         if let image = options.onFailureImage {
-                            self.base.contentMode = .center
+                            self.base.contentMode = .scaleAspectFit
                             self.base.image = image
                             self.base.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
                         }
