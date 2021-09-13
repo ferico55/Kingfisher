@@ -329,10 +329,12 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
             mutatingSelf.taskIdentifier = nil
             completionHandler?(.failure(KingfisherError.imageSettingError(reason: .emptySource)))
 
-            if let image = parsedOptions.onFailureImage {
-                self.base.contentMode = .center
-                self.base.image = image?.resized(toWidth: self.base.frame.width / 2)
-                self.base.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
+            DispatchQueue.main.async {
+                if let image = parsedOptions.onFailureImage {
+                    self.base.contentMode = .center
+                    self.base.image = image?.resized(toWidth: self.base.frame.width / 2)
+                    self.base.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
+                }
             }
 
             return nil
