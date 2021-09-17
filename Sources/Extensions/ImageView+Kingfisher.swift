@@ -124,7 +124,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
         completionHandler: ((Result<RetrieveImageResult, KingfisherError>) -> Void)? = nil) -> DownloadTask?
     {
         let options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + (options ?? .empty))
-        return setImage(with: source, placeholder: placeholder, parsedOptions: options, progressBlock: progressBlock, completionHandler: completionHandler)
+        return setImage(with: source, placeholder: placeholder, parsedOptions: options, progressBlock: progressBlock, contentMode: contentMode, completionHandler: completionHandler)
     }
 
     /// Sets an image to the image view with a `Source`.
