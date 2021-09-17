@@ -120,6 +120,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
         placeholder: Placeholder? = nil,
         options: KingfisherOptionsInfo? = nil,
         progressBlock: DownloadProgressBlock? = nil,
+        contentMode: UIView.ContentMode = .scaleAspectFit,
         completionHandler: ((Result<RetrieveImageResult, KingfisherError>) -> Void)? = nil) -> DownloadTask?
     {
         let options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + (options ?? .empty))
@@ -166,6 +167,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
         with source: Source?,
         placeholder: Placeholder? = nil,
         options: KingfisherOptionsInfo? = nil,
+        contentMode: UIView.ContentMode = .scaleAspectFit,
         completionHandler: ((Result<RetrieveImageResult, KingfisherError>) -> Void)? = nil) -> DownloadTask?
     {
         return setImage(
@@ -173,6 +175,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
             placeholder: placeholder,
             options: options,
             progressBlock: nil,
+            contentMode: contentMode,
             completionHandler: completionHandler
         )
     }
@@ -321,6 +324,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
         placeholder: Placeholder? = nil,
         parsedOptions: KingfisherParsedOptionsInfo,
         progressBlock: DownloadProgressBlock? = nil,
+        contentMode: UIView.ContentMode = .scaleAspectFit,
         completionHandler: ((Result<RetrieveImageResult, KingfisherError>) -> Void)? = nil) -> DownloadTask?
     {
         var mutatingSelf = self
@@ -403,7 +407,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImageView {
                             mutatingSelf.placeholder = nil
                             self.base.image = value.image
                             self.base.backgroundColor = .clear
-                            self.base.contentMode = .scaleAspectFit
+                            self.base.contentMode = contentMode
                             completionHandler?(result)
                             return
                         }
